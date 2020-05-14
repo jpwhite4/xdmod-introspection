@@ -32,5 +32,18 @@
                 1062
             ]
         }
+    ],
+    "aggregation": [
+        {
+            "name": "aggregation",
+            "namespace": "ETL\\Aggregator",
+            "options_class": "AggregatorOptions",
+            "class": "SimpleAggregator",
+            "truncate_destination": false,
+            "description": "Aggregate Log Times",
+            "definition_file": "introspection/logtimes_by.json",
+            "table_prefix": "logtimes_by_",
+            "aggregation_units": ["day", "month", "quarter", "year"]
+        }
     ]
 }

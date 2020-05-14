@@ -1,0 +1,96 @@
+{
+    "table_definition": {
+        "name": "logtimes_by",
+        "table_prefix": "logtimes_by_",
+        "engine": "MyISAM",
+        "comment": "Logtimes aggregate table",
+        "columns": [
+            {
+                "name": "${AGGREGATION_UNIT}_id",
+                "type": "int(10) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The id related to modw.${AGGREGATION_UNIT}s."
+            },
+            {
+                "name": "year",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The year of the ${AGGREGATION_UNIT}"
+            },
+            {
+                "name": "${AGGREGATION_UNIT}",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The ${AGGREGATION_UNIT} of the year."
+            },
+            {
+                "name": "etlaction_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: the etl action name"
+            },
+            {
+                "name": "job_time_bucket_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: Job time is bucketing of wall time based on prechosen intervals in the modw.job_times table."
+            },
+            {
+                "name": "started_job_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of jobs that started during this period."
+            },
+            {
+                "name": "running_job_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of jobs running during this period."
+            },
+            {
+                "name": "ended_job_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of jobs ended during this period."
+            },
+            {
+                "name": "wallduration",
+                "type": "decimal(18,0)",
+                "comment": "FACT: (seconds) The wallduration of the jobs that were running during this period. This will only count the walltime of the jobs that fell during this day. If a job started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a job ends not in this day, but upcoming days.",
+                "nullable": true
+            },
+            {
+                "name": "sum_wallduration_squared",
+                "type": "double",
+                "comment": "FACT: (seconds) The sum of the square of wallduration of the jobs that were running during this period. This will only count the walltime of the jobs that fell during this day. If a job started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a job ends not in this day, but upcoming days.",
+                "nullable": true
+            }
+        ],
+        "indexes": [
+            {
+                "name": "index_logtimes_by_${AGGREGATION_UNIT}_${AGGREGATION_UNIT}_id",
+                "columns": [
+                    "${AGGREGATION_UNIT}_id"
+                ]
+            },
+            {
+                "name": "index_logtimes_by_${AGGREGATION_UNIT}_${AGGREGATION_UNIT}",
+                "columns": [
+                    "${AGGREGATION_UNIT}"
+                ]
+            },
+            {
+                "name": "index_logtimes_etlaction_id",
+                "columns": [
+                    "etlaction_id"
+                ]
+            },
+            {
+                "name": "index_logtimes_job_time_bucket_id",
+                "columns": [
+                    "job_time_bucket_id"
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "table_definition": {
+        "$ref": "${table_definition_dir}/introspection/logtimes_by.json#/table_definition"
+    },
+    "aggregation_period_query": {
+        "conversions": {
+            "start_day_id": "YEAR(FROM_UNIXTIME(start_time_ts)) * 100000 + DAYOFYEAR(FROM_UNIXTIME(start_time_ts))",
+            "end_day_id": "YEAR(FROM_UNIXTIME(end_time_ts)) * 100000 + DAYOFYEAR(FROM_UNIXTIME(end_time_ts))"
+        }
+    },
+    "source_query": {
+        "query_hint": "SQL_NO_CACHE",
+        "records": {
+            "${AGGREGATION_UNIT}_id": "${:PERIOD_ID}",
+            "year": "${:YEAR_VALUE}",
+            "${AGGREGATION_UNIT}": "${:PERIOD_VALUE}",
+            "etlaction_id": "e.id",
+            "job_time_bucket_id": "(SELECT id FROM ${UTILITY_SCHEMA}.job_times jt WHERE l.duration >= jt.min_duration AND l.duration <= jt.max_duration)",
+            "started_job_count": "sum(case when l.start_time_ts between ${:PERIOD_START_TS} and ${:PERIOD_END_TS} then 1 else 0 end)",
+            "running_job_count": "sum(1)",
+            "ended_job_count": "sum(case when l.end_time_ts between ${:PERIOD_START_TS} and ${:PERIOD_END_TS} then 1 else 0 end)",
+            "wallduration": "COALESCE(SUM( ${wallduration_case_statement}), 0)",
+            "sum_wallduration_squared": "COALESCE(SUM( CAST(POW(${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)"
+        },
+        "groupby": [
+            "etlaction_id"
+        ],
+        "joins": [
+            {
+                "name": "logtimes",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "l"
+            },
+            {
+                "name": "etlactions",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "e",
+                "on": "e.etl_action = l.etl_action",
+                "type": "STRAIGHT"
+            }
+        ],
+        "where": [
+            "YEAR(FROM_UNIXTIME(l.start_time_ts)) * 100000 + DAYOFYEAR(FROM_UNIXTIME(l.start_time_ts)) <= ${:PERIOD_END_DAY_ID} AND YEAR(FROM_UNIXTIME(l.end_time_ts)) * 100000 + DAYOFYEAR(FROM_UNIXTIME(l.end_time_ts)) >= ${:PERIOD_START_DAY_ID}"
+        ],
+        "macros": [
+            {
+                "name": "wallduration_case_statement",
+                "file": "statistic_ratio_case.sql",
+                "args": {
+                    "statistic": "l.duration",
+                    "max": "${:PERIOD_SECONDS}",
+                    "src_start_ts": "l.start_time_ts",
+                    "src_end_ts": "l.end_time_ts",
+                    "dest_start_ts": "${:PERIOD_START_TS}",
+                    "dest_end_ts": "${:PERIOD_END_TS}"
+                }
+            }
+        ]
+    }
+}

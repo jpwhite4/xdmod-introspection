@@ -17,6 +17,8 @@
             "log_time": "l.logtime",
             "message": "l.message",
             "etl_action": -1,
+            "start_time_ts": -1,
+            "end_time_ts": -1,
             "duration": -1
         },
         "joins": [
@@ -38,6 +40,8 @@
             "sequence": "sequence",
             "log_time": "log_time",
             "etl_action": "etl_action",
+            "start_time_ts": "start_time_ts",
+            "end_time_ts": "end_time_ts",
             "duration": "duration"
         }
     }

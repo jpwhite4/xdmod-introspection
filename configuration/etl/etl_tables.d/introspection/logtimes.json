@@ -23,6 +23,18 @@
                 "comment": "the etl action name"
             },
             {
+                "name": "start_time_ts",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "When the action started"
+            },
+            {
+                "name": "end_time_ts",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "When the action ended"
+            },
+            {
                 "name": "duration",
                 "type": "int(11)",
                 "nullable": false,

@@ -14,18 +14,6 @@ use Log;
 
 class XDMoDLogIngestor extends pdoIngestor implements iAction
 {
-    private function demangleTime($time)
-    {
-        if (is_numeric($time)) {
-            return ceil($time);
-        }
-        else if (strpos($time, 'm') === strlen($time) - 1) {
-            return ceil(substr($time, 0, strlen($time) - 1)) * 60;
-        }
-        print $time . "\n";
-        return -1;
-    }
-
     /**
      * @see ETL\Ingestor\pdoIngestor::transform()
      */
@@ -34,14 +22,16 @@ class XDMoDLogIngestor extends pdoIngestor implements iAction
         $transformedRecord = array();
 
         $parsed = json_decode($srcRecord['message'], true);
-        if (isset($parsed['action']) && isset($parsed['elapsed_time'])) {
+        if (isset($parsed['action']) && isset($parsed['start_time']) && isset($parsed['end_time'])) {
             $spacechar = strpos($parsed['action'], ' ');
             if ($spacechar > 0) {
                 $transformedRecord[] = array(
                     'sequence' => $srcRecord['sequence'],
                     'log_time' => $srcRecord['log_time'],
+                    'start_time_ts' => round($parsed['start_time']),
+                    'end_time_ts' => round($parsed['end_time']),
                     'etl_action' => substr($parsed['action'], 0, $spacechar),
-                    'duration' => $this->demangleTime($parsed['elapsed_time'])
+                    'duration' => round($parsed['end_time'] - $parsed['start_time'])
                 );
             }
         }
