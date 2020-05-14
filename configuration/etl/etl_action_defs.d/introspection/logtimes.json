@@ -1,0 +1,44 @@
+{
+    "table_definition": [
+        {
+            "$ref": "${table_definition_dir}/introspection/logtimes.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/etlactions.json#/table_definition"
+        }
+    ],
+    "source_query": {
+        "overseer_restrictions": {
+            "start_date": "l.logtime >= ${VALUE}",
+            "end_date": "l.logtime <= ${VALUE}"
+        },
+        "records": {
+            "sequence": "l.id",
+            "log_time": "l.logtime",
+            "message": "l.message",
+            "etl_action": -1,
+            "duration": -1
+        },
+        "joins": [
+            {
+                "name": "log_table",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "l"
+            }
+        ],
+        "where": [
+            "l.priority = 5"
+        ]
+    },
+    "destination_record_map": {
+        "etlactions": {
+            "etl_action": "etl_action"
+        },
+        "logtimes": {
+            "sequence": "sequence",
+            "log_time": "log_time",
+            "etl_action": "etl_action",
+            "duration": "duration"
+        }
+    }
+}

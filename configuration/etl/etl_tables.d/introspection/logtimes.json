@@ -1,0 +1,41 @@
+{
+    "table_definition": {
+        "name": "logtimes",
+        "engine": "MyISAM",
+        "comment": "Parsed data about the amount of time a given etl action took",
+        "columns": [
+            {
+                "name": "sequence",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "sequence number of log entry from original log table."
+            },
+            {
+                "name": "log_time",
+                "type": "datetime",
+                "nullable": false,
+                "comment": "timestamp of original log record"
+            },
+            {
+                "name": "etl_action",
+                "type": "VARCHAR(128)",
+                "nullable": false,
+                "comment": "the etl action name"
+            },
+            {
+                "name": "duration",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "how long the action took to run in seconds."
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "sequence"
+                ]
+            }
+        ]
+    }
+}

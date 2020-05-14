@@ -1,0 +1,38 @@
+{
+    "table_definition": {
+        "name": "etlactions",
+        "engine": "MyISAM",
+        "comment": "Parsed data about the amount of time a given etl action took",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "nullable": false,
+                "extra": "auto_increment",
+                "comment": "primary key"
+            },
+            {
+                "name": "etl_action",
+                "type": "VARCHAR(128)",
+                "nullable": false,
+                "comment": "the etl action name"
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "etl_action"
+                ],
+                "is_unique": true
+            }
+        ]
+    }
+}
+

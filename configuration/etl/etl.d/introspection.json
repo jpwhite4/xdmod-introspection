@@ -1,0 +1,36 @@
+{
+    "module": "introspection",
+    "defaults": {
+        "global": {
+            "endpoints": {
+                "source": {
+                    "type": "mysql",
+                    "name": "xdmod log DB",
+                    "config": "datawarehouse",
+                    "schema": "mod_logger"
+                },
+                "destination": {
+                    "type": "mysql",
+                    "name": "logaggregates",
+                    "config": "datawarehouse",
+                    "schema": "mod_logger",
+                    "create_schema_if_not_exists": true
+                }
+            }
+        }
+    },
+    "ingestion": [
+        {
+            "name": "log-data-load",
+            "description": "Load data into timings dimension tables",
+            "class": "XDMoDLogIngestor",
+            "namespace": "ETL\\Ingestor",
+            "options_class": "IngestorOptions",
+            "definition_file": "introspection/logtimes.json",
+            "truncate_destination": false,
+            "hide_sql_warning_codes": [
+                1062
+            ]
+        }
+    ]
+}

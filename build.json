@@ -1,0 +1,25 @@
+{
+    "name": "xdmod-introspection",
+    "version": "9.0.0",
+    "release": "1.0",
+    "files": {
+        "include_paths": [
+        ],
+        "include_patterns": [
+        ],
+        "exclude_paths": [
+            "docs"
+        ],
+        "exclude_patterns": [
+            "#/\\.#"
+        ]
+    },
+    "file_maps": {
+        "lib": [
+            "scripts/"
+        ],
+        "etc": {
+            "configuration/etl": ""
+        }
+    }
+}
