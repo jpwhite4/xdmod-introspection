@@ -15,8 +15,8 @@
         ]
     },
     "file_maps": {
-        "lib": [
-            "scripts/"
+        "data": [
+            "classes"
         ],
         "etc": {
             "configuration/etl": ""

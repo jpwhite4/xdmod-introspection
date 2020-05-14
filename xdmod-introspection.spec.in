@@ -35,5 +35,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/xdmod/
+%{_datadir}/xdmod/
 %{_sysconfdir}/xdmod/etl/
