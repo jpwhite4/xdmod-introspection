@@ -5,6 +5,12 @@
         "comment": "Parsed data about the amount of time a given etl action took",
         "columns": [
             {
+                "name": "datasource",
+                "type": "char(8)",
+                "nullable": false,
+                "comment": "The identifier for the source of the log data"
+            },
+            {
                 "name": "sequence",
                 "type": "int(11)",
                 "nullable": false,
@@ -45,6 +51,7 @@
             {
                 "name": "PRIMARY",
                 "columns": [
+                    "datasource",
                     "sequence"
                 ]
             }

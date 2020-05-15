@@ -1,0 +1,38 @@
+{
+    "table_definition": {
+        "name": "datasources",
+        "engine": "MyISAM",
+        "comment": "Different sources of timing log information",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "nullable": false,
+                "extra": "auto_increment",
+                "comment": "primary key"
+            },
+            {
+                "name": "datasource",
+                "type": "char(8)",
+                "nullable": false,
+                "comment": "the datasource name"
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "datasource"
+                ],
+                "is_unique": true
+            }
+        ]
+    }
+}
+

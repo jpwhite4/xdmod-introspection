@@ -31,6 +31,26 @@
             "hide_sql_warning_codes": [
                 1062
             ]
+        },
+        {
+            "name": "etlv1-data-load",
+            "description": "Load javascript based etl data",
+            "class": "DatabaseIngestor",
+            "namespace": "ETL\\Ingestor",
+            "definition_file": "introspection/etlv1times.json",
+            "options_class": "IngestorOptions",
+            "truncate_destination": false,
+            "hide_sql_warning_codes": [
+                1062
+            ],
+            "endpoints": {
+                "source": {
+                    "type": "mysql",
+                    "name": "etlv1logs",
+                    "config": "datawarehouse",
+                    "schema": "modw_etl"
+                }
+            }
         }
     ],
     "aggregation": [

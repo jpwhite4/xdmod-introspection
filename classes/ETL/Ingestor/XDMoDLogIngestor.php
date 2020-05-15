@@ -26,6 +26,7 @@ class XDMoDLogIngestor extends pdoIngestor implements iAction
             $spacechar = strpos($parsed['action'], ' ');
             if ($spacechar > 0) {
                 $transformedRecord[] = array(
+                    'datasource' => $srcRecord['datasource'],
                     'sequence' => $srcRecord['sequence'],
                     'log_time' => $srcRecord['log_time'],
                     'start_time_ts' => round($parsed['start_time']),

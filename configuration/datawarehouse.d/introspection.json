@@ -23,6 +23,38 @@
             "jobwalltime": {
                 "$ref": "datawarehouse.d/ref/group-by-common.json#/jobwalltime"
             },
+            "logsource": {
+                "attribute_table_schema": "mod_logger",
+                "attribute_to_aggregate_table_key_map": [
+                    {
+                        "id": "datasource_id"
+                    }
+                ],
+                "attribute_values_query": {
+                    "joins": [{
+                        "name": "datasources"
+                    }],
+                    "orderby": [
+                        "datasource"
+                    ],
+                    "records": {
+                        "id": "id",
+                        "name": "datasource",
+                        "order_id": "datasource",
+                        "short_name": "datasource"
+                    }
+                },
+                "category": "Administrative",
+                "chart_options": {
+                    "dataset_display_type": {
+                        "aggregate": "bar",
+                        "timeseries": "area"
+                    }
+                },
+                "data_sort_order": null,
+                "description_html": "The datasource name",
+                "name": "Log Source"
+            },
             "etlaction": {
                 "attribute_table_schema": "mod_logger",
                 "attribute_to_aggregate_table_key_map": [

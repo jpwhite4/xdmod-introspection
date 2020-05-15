@@ -14,6 +14,7 @@
             "${AGGREGATION_UNIT}_id": "${:PERIOD_ID}",
             "year": "${:YEAR_VALUE}",
             "${AGGREGATION_UNIT}": "${:PERIOD_VALUE}",
+            "datasource_id": "d.id",
             "etlaction_id": "e.id",
             "job_time_bucket_id": "(SELECT id FROM ${UTILITY_SCHEMA}.job_times jt WHERE l.duration >= jt.min_duration AND l.duration <= jt.max_duration)",
             "started_job_count": "sum(case when l.start_time_ts between ${:PERIOD_START_TS} and ${:PERIOD_END_TS} then 1 else 0 end)",
@@ -36,6 +37,13 @@
                 "schema": "${SOURCE_SCHEMA}",
                 "alias": "e",
                 "on": "e.etl_action = l.etl_action",
+                "type": "STRAIGHT"
+            },
+            {
+                "name": "datasources",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "d",
+                "on": "d.datasource = l.datasource",
                 "type": "STRAIGHT"
             }
         ],

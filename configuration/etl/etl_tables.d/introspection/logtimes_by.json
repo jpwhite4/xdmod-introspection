@@ -30,6 +30,12 @@
                 "comment": "DIMENSION: the etl action name"
             },
             {
+                "name": "datasource_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: the source of timing information"
+            },
+            {
                 "name": "job_time_bucket_id",
                 "type": "int(11)",
                 "nullable": false,
@@ -83,6 +89,12 @@
                 "name": "index_logtimes_etlaction_id",
                 "columns": [
                     "etlaction_id"
+                ]
+            },
+            {
+                "name": "index_logtimes_datasource_id",
+                "columns": [
+                    "datasource_id"
                 ]
             },
             {
