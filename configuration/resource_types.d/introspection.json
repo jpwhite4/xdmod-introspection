@@ -1,0 +1,9 @@
+{
+    "+resource_types": {
+        "+HPC": {
+            "+realms": [
+                "Introspection"
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "module": "introspection",
+    "+roles": {
+        "+default": {
+            "+query_descripters": [
+                {
+                    "realm": "Introspection",
+                    "group_by": "none"
+                },
+                {
+                    "realm": "Introspection",
+                    "group_by": "jobwalltime"
+                },
+                {
+                    "realm": "Introspection",
+                    "group_by": "etlaction"
+                }
+            ]
+        }
+    }
+}

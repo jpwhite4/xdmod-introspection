@@ -19,7 +19,11 @@
             "classes"
         ],
         "etc": {
-            "configuration/etl": ""
+            "configuration/etl": "",
+            "configuration/modules.d": "",
+            "configuration/roles.d": "",
+            "configuration/datawarehouse.d": ""
+            "configuration/resource_types.d": ""
         }
     }
 }
