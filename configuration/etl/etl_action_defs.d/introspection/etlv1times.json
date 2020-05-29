@@ -7,6 +7,12 @@
             "$ref": "${table_definition_dir}/introspection/datasources.json#/table_definition"
         },
         {
+            "$ref": "${table_definition_dir}/introspection/modules.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/pipelines.json#/table_definition"
+        },
+        {
             "$ref": "${table_definition_dir}/introspection/etlactions.json#/table_definition"
         }
     ],
@@ -19,6 +25,8 @@
             "datasource": "'etlv1'",
             "sequence": "l.id",
             "log_time": "FROM_UNIXTIME(l.end_ts)",
+            "module": "'supremm'",
+            "pipeline": "'etlv1'",
             "etl_action": "CONCAT(l.etlProfileName, '.' , l.dataset)",
             "start_time_ts": "l.start_ts",
             "end_time_ts": "l.end_ts",
@@ -36,6 +44,12 @@
         ]
     },
     "destination_record_map": {
+        "modules": {
+            "module": "module"
+        },
+        "pipelines": {
+            "pipeline": "pipeline"
+        },
         "etlactions": {
             "etl_action": "etl_action"
         },
@@ -46,6 +60,8 @@
             "datasource": "datasource",
             "sequence": "sequence",
             "log_time": "log_time",
+            "module": "module",
+            "pipeline": "pipeline",
             "etl_action": "etl_action",
             "start_time_ts": "start_time_ts",
             "end_time_ts": "end_time_ts",

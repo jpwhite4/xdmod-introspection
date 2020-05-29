@@ -13,6 +13,14 @@
                 },
                 {
                     "realm": "Introspection",
+                    "group_by": "module"
+                },
+                {
+                    "realm": "Introspection",
+                    "group_by": "pipeline"
+                },
+                {
+                    "realm": "Introspection",
                     "group_by": "etlaction"
                 },
                 {

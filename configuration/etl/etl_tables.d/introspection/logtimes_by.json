@@ -24,6 +24,18 @@
                 "comment": "DIMENSION: The ${AGGREGATION_UNIT} of the year."
             },
             {
+                "name": "module_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: the etl module name"
+            },
+            {
+                "name": "pipeline_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: the etl pipeline name"
+            },
+            {
                 "name": "etlaction_id",
                 "type": "int(11)",
                 "nullable": false,
@@ -83,6 +95,18 @@
                 "name": "index_logtimes_by_${AGGREGATION_UNIT}_${AGGREGATION_UNIT}",
                 "columns": [
                     "${AGGREGATION_UNIT}"
+                ]
+            },
+            {
+                "name": "index_logtimes_module_id",
+                "columns": [
+                    "module_id"
+                ]
+            },
+            {
+                "name": "index_logtimes_pipeline_id",
+                "columns": [
+                    "pipeline_id"
                 ]
             },
             {

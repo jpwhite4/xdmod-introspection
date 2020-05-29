@@ -15,6 +15,8 @@
             "year": "${:YEAR_VALUE}",
             "${AGGREGATION_UNIT}": "${:PERIOD_VALUE}",
             "datasource_id": "d.id",
+            "module_id": "m.id",
+            "pipeline_id": "p.id",
             "etlaction_id": "e.id",
             "job_time_bucket_id": "(SELECT id FROM ${UTILITY_SCHEMA}.job_times jt WHERE l.duration >= jt.min_duration AND l.duration <= jt.max_duration)",
             "started_job_count": "sum(case when l.start_time_ts between ${:PERIOD_START_TS} and ${:PERIOD_END_TS} then 1 else 0 end)",
@@ -31,6 +33,20 @@
                 "name": "logtimes",
                 "schema": "${SOURCE_SCHEMA}",
                 "alias": "l"
+            },
+            {
+                "name": "modules",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "m",
+                "on": "m.module = l.module",
+                "type": "STRAIGHT"
+            },
+            {
+                "name": "pipelines",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "p",
+                "on": "p.pipeline = l.pipeline",
+                "type": "STRAIGHT"
             },
             {
                 "name": "etlactions",

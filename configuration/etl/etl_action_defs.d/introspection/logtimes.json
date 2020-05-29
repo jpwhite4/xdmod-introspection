@@ -7,6 +7,12 @@
             "$ref": "${table_definition_dir}/introspection/datasources.json#/table_definition"
         },
         {
+            "$ref": "${table_definition_dir}/introspection/modules.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/pipelines.json#/table_definition"
+        },
+        {
             "$ref": "${table_definition_dir}/introspection/etlactions.json#/table_definition"
         }
     ],
@@ -20,6 +26,8 @@
             "sequence": "l.id",
             "log_time": "l.logtime",
             "message": "l.message",
+            "module": -1,
+            "pipeline": -1,
             "etl_action": -1,
             "start_time_ts": -1,
             "end_time_ts": -1,
@@ -37,6 +45,12 @@
         ]
     },
     "destination_record_map": {
+        "modules": {
+            "module": "module"
+        },
+        "pipelines": {
+            "pipeline": "pipeline"
+        },
         "etlactions": {
             "etl_action": "etl_action"
         },
@@ -47,6 +61,8 @@
             "datasource": "datasource",
             "sequence": "sequence",
             "log_time": "log_time",
+            "module": "module",
+            "pipeline": "pipeline",
             "etl_action": "etl_action",
             "start_time_ts": "start_time_ts",
             "end_time_ts": "end_time_ts",

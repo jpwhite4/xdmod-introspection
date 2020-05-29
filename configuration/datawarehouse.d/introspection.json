@@ -55,6 +55,70 @@
                 "description_html": "The datasource name",
                 "name": "Log Source"
             },
+            "module": {
+                "attribute_table_schema": "mod_logger",
+                "attribute_to_aggregate_table_key_map": [
+                    {
+                        "id": "module_id"
+                    }
+                ],
+                "attribute_values_query": {
+                    "joins": [{
+                        "name": "modules"
+                    }],
+                    "orderby": [
+                        "module"
+                    ],
+                    "records": {
+                        "id": "id",
+                        "name": "module",
+                        "order_id": "module",
+                        "short_name": "module"
+                    }
+                },
+                "category": "Administrative",
+                "chart_options": {
+                    "dataset_display_type": {
+                        "aggregate": "bar",
+                        "timeseries": "area"
+                    }
+                },
+                "data_sort_order": null,
+                "description_html": "The ETL module name",
+                "name": "ETL Module"
+            },
+            "pipeline": {
+                "attribute_table_schema": "mod_logger",
+                "attribute_to_aggregate_table_key_map": [
+                    {
+                        "id": "pipeline_id"
+                    }
+                ],
+                "attribute_values_query": {
+                    "joins": [{
+                        "name": "pipelines"
+                    }],
+                    "orderby": [
+                        "pipeline"
+                    ],
+                    "records": {
+                        "id": "id",
+                        "name": "pipeline",
+                        "order_id": "pipeline",
+                        "short_name": "pipeline"
+                    }
+                },
+                "category": "Administrative",
+                "chart_options": {
+                    "dataset_display_type": {
+                        "aggregate": "bar",
+                        "timeseries": "area"
+                    }
+                },
+                "data_sort_order": null,
+                "description_html": "The ETL pipeline name",
+                "name": "ETL Pipeline"
+            },
             "etlaction": {
                 "attribute_table_schema": "mod_logger",
                 "attribute_to_aggregate_table_key_map": [
