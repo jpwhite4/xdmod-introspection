@@ -1,0 +1,38 @@
+{
+    "table_definition": {
+        "name": "modules",
+        "engine": "MyISAM",
+        "comment": "Parsed data about the amount of time a given etl action took",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "nullable": false,
+                "extra": "auto_increment",
+                "comment": "primary key"
+            },
+            {
+                "name": "module",
+                "type": "VARCHAR(128)",
+                "nullable": false,
+                "comment": "The name of the etl module"
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "module"
+                ],
+                "is_unique": true
+            }
+        ]
+    }
+}
+

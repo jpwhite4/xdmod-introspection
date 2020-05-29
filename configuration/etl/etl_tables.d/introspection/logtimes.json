@@ -23,6 +23,18 @@
                 "comment": "timestamp of original log record"
             },
             {
+                "name": "module",
+                "type": "VARCHAR(128)",
+                "nullable": false,
+                "comment": "the etl module name"
+            },
+            {
+                "name": "pipeline",
+                "type": "VARCHAR(128)",
+                "nullable": false,
+                "comment": "the etl pipeline name"
+            },
+            {
                 "name": "etl_action",
                 "type": "VARCHAR(128)",
                 "nullable": false,
