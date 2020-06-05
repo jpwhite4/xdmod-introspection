@@ -33,6 +33,26 @@
             ]
         },
         {
+            "name": "taccstats-data-load",
+            "description": "Load tacc_stats summarization",
+            "class": "DatabaseIngestor",
+            "namespace": "ETL\\Ingestor",
+            "definition_file": "introspection/taccstats.json",
+            "options_class": "IngestorOptions",
+            "truncate_destination": false,
+            "hide_sql_warning_codes": [
+                1062
+            ],
+            "endpoints": {
+                "source": {
+                    "type": "mysql",
+                    "name": "taccstats",
+                    "config": "datawarehouse",
+                    "schema": "modw_taccstats"
+                }
+            }
+        },
+        {
             "name": "etlv1-data-load",
             "description": "Load javascript based etl data",
             "class": "DatabaseIngestor",

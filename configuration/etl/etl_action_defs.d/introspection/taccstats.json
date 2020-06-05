@@ -1,0 +1,71 @@
+{
+    "table_definition": [
+        {
+            "$ref": "${table_definition_dir}/introspection/logtimes.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/datasources.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/modules.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/pipelines.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/introspection/etlactions.json#/table_definition"
+        }
+    ],
+    "source_query": {
+        "overseer_restrictions": {
+            "start_date": "FROM_UNIXTIME(l.end_ts) >= ${VALUE}",
+            "end_date": "FROM_UNIXTIME(l.end_ts) <= ${VALUE}"
+        },
+        "records": {
+            "datasource": "'tstats'",
+            "sequence": "l.id",
+            "log_time": "FROM_UNIXTIME(l.end_ts)",
+            "module": "'summarization'",
+            "pipeline": "'summarization.tacc_stats'",
+            "etl_action": "CONCAT('summarization.tacc_stats.' , l.dataset)",
+            "start_time_ts": "l.start_ts",
+            "end_time_ts": "l.end_ts",
+            "duration": "l.end_ts - l.start_ts"
+        },
+        "joins": [
+            {
+                "name": "log",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "l"
+            }
+        ],
+        "where": [
+            "l.processed != 0"
+        ]
+    },
+    "destination_record_map": {
+        "modules": {
+            "module": "module"
+        },
+        "pipelines": {
+            "pipeline": "pipeline"
+        },
+        "etlactions": {
+            "etl_action": "etl_action"
+        },
+        "datasources": {
+            "datasource": "datasource"
+        },
+        "logtimes": {
+            "datasource": "datasource",
+            "sequence": "sequence",
+            "log_time": "log_time",
+            "module": "module",
+            "pipeline": "pipeline",
+            "etl_action": "etl_action",
+            "start_time_ts": "start_time_ts",
+            "end_time_ts": "end_time_ts",
+            "duration": "duration"
+        }
+    }
+}
