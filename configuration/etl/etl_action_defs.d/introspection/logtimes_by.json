@@ -26,7 +26,11 @@
             "sum_wallduration_squared": "COALESCE(SUM( CAST(POW(${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)"
         },
         "groupby": [
-            "etlaction_id"
+            "datasource_id",
+            "module_id",
+            "pipeline_id",
+            "etlaction_id",
+            "job_time_bucket_id"
         ],
         "joins": [
             {
