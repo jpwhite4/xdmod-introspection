@@ -85,5 +85,33 @@
             "table_prefix": "logtimes_by_",
             "aggregation_units": ["day", "month", "quarter", "year"]
         }
+    ],
+    "pcpaggregation": [
+        {
+            "name": "pcpaggregation",
+            "namespace": "ETL\\Aggregator",
+            "options_class": "AggregatorOptions",
+            "class": "SimpleAggregator",
+            "truncate_destination": false,
+            "description": "Aggregate PCP archive data",
+            "definition_file": "introspection/pcparchives_by.json",
+            "table_prefix": "pcparchives_by_",
+            "aggregation_units": ["day", "month", "quarter", "year"],
+            "endpoints": {
+                "source": {
+                    "type": "mysql",
+                    "name": "xdmod archive DB",
+                    "config": "datawarehouse",
+                    "schema": "modw_supremm"
+                },
+                "destination": {
+                    "type": "mysql",
+                    "name": "pcparchive",
+                    "config": "datawarehouse",
+                    "schema": "modw_aggregates",
+                    "create_schema_if_not_exists": true
+                }
+            }
+        }
     ]
 }

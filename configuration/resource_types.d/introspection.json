@@ -1,8 +1,13 @@
 {
     "+resource_types": {
-        "+HPC": {
+        "+HTC": {
             "+realms": [
                 "Introspection"
+            ]
+        },
+        "+Gateway": {
+            "+realms": [
+                "PCPArchives"
             ]
         }
     }

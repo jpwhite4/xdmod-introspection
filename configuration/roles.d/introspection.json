@@ -1,7 +1,7 @@
 {
     "module": "introspection",
     "+roles": {
-        "+po": {
+        "+cd": {
             "+query_descripters": [
                 {
                     "realm": "Introspection",
@@ -26,6 +26,18 @@
                 {
                     "realm": "Introspection",
                     "group_by": "logsource"
+                },
+                {
+                    "realm": "PCPArchives",
+                    "group_by": "none"
+                },
+                {
+                    "realm": "PCPArchives",
+                    "group_by": "jobwalltime"
+                },
+                {
+                    "realm": "PCPArchives",
+                    "group_by": "resource"
                 }
             ]
         }

@@ -199,5 +199,157 @@
                 "unit": "Seconds"
             }
         }
+    },
+    "PCPArchives": {
+        "aggregate_schema": "modw_aggregates",
+        "aggregate_table_alias": "agg",
+        "aggregate_table_prefix": "pcparchives_by_",
+        "datasource": "Job Performance Summarizer",
+        "group_bys": {
+            "day": {
+                "$ref": "datawarehouse.d/ref/group-by-time-period.json#/day"
+            },
+            "month": {
+                "$ref": "datawarehouse.d/ref/group-by-time-period.json#/month"
+            },
+            "quarter": {
+                "$ref": "datawarehouse.d/ref/group-by-time-period.json#/quarter"
+            },
+            "year": {
+                "$ref": "datawarehouse.d/ref/group-by-time-period.json#/year"
+            },
+            "none": {
+                "$ref": "datawarehouse.d/ref/group-by-none.json"
+            },
+            "resource": {
+                "attribute_table_schema": "modw",
+                "attribute_to_aggregate_table_key_map": [
+                    {
+                        "id": "resource_id"
+                    }
+                ],
+                "attribute_values_query": {
+                    "joins": [
+                        {
+                            "name": "resourcefact"
+                        },
+                        {
+                            "name": "resourcespecs",
+                            "on": "resourcefact.id = resourcespecs.resource_id"
+                        }
+                    ],
+                    "orderby": [
+                        "resourcefact.code",
+                        "resourcefact.name"
+                    ],
+                    "query_hint": "DISTINCT",
+                    "records": {
+                        "id": "resourcefact.id",
+                        "name": "REPLACE(resourcefact.code, '-', ' ')",
+                        "order_id": "id",
+                        "short_name": "REPLACE(resourcefact.code, '-', ' ')"
+                    },
+                    "where": [
+                        "resourcespecs.processors IS NOT NULL"
+                    ]
+                },
+                "category": "Administrative",
+                "description_html": "A resource is a remote computer that can run jobs.",
+                "name": "Resource"
+            },
+            "jobwalltime": {
+                "attribute_table_schema": "modw",
+                "attribute_to_aggregate_table_key_map": [
+                    {
+                        "id": "archivelength_bucket_id"
+                    }
+                ],
+                "attribute_values_query": {
+                    "joins": [
+                        {
+                            "name": "job_times"
+                        }
+                    ],
+                    "orderby": [
+                        "id"
+                    ],
+                    "records": {
+                        "id": "id",
+                        "name": "description",
+                        "order_id": "id",
+                        "short_name": "description"
+                    }
+                },
+                "category": "Usage",
+                "chart_options": {
+                    "dataset_display_type": {
+                        "aggregate": "bar",
+                        "timeseries": "area"
+                    }
+                },
+                "data_sort_order": null,
+                "description_html": "Archives binned by the amount of time they span",
+                "name": "Archive Wall Time"
+            }
+        },
+        "module": "introspection",
+        "name": "PCPArchives",
+        "order": 200,
+        "statistics": {
+            "avg_wallduration_hours": {
+                "$ref": "datawarehouse.d/ref/Jobs-statistics.json#/avg_wallduration_hours"
+            },
+            "avg_wallduration_seconds": {
+                "aggregate_formula": "COALESCE(SUM(agg.wallduration)/SUM(CASE ${DATE_TABLE_ID_FIELD} WHEN ${MIN_DATE_ID} THEN agg.running_archive_count ELSE agg.started_archive_count END),0)",
+                "timeseries_formula": "COALESCE(SUM(agg.wallduration)/SUM(agg.running_archive_count),0)",
+                "description_html": "The average time, in seconds, a job takes to execute.<br/>In timeseries view mode, the statistic shows the average wall time per job per time period. In aggregate view mode the statistic only includes the job wall hours between the defined time range. The wall hours outside the time range are not included in the calculation.<br /> <i>Wall Time:</i> Wall time is defined as the linear time between start and end time of execution for a particular job.",
+                "name": "Wall Time: Per Job",
+                "precision": 0,
+                "unit": "Seconds"
+            },
+            "running_archive_count": {
+                "description_html": "The total number of archives that contained data within the selected duration.",
+                "formula": "COALESCE(SUM(agg.running_archive_count), 0)",
+                "name": "Number of Archives Running",
+                "precision": 0,
+                "unit": "Number of Archives"
+            },
+            "started_archive_count": {
+                "description_html": "The total number of archives that started within the selected duration.",
+                "formula": "COALESCE(SUM(agg.started_archive_count), 0)",
+                "name": "Number of Archives Started",
+                "precision": 0,
+                "unit": "Number of Archives"
+            },
+            "ended_archive_count": {
+                "description_html": "The total number of archives that ended within the selected duration.",
+                "formula": "COALESCE(SUM(agg.ended_archive_count), 0)",
+                "name": "Number of Archives Ended",
+                "precision": 0,
+                "unit": "Number of Archives"
+            },
+            "sem_avg_wallduration_hours": {
+                "$ref": "datawarehouse.d/ref/Jobs-statistics.json#/sem_avg_wallduration_hours"
+            },
+            "sem_avg_wallduration_seconds": {
+                "aggregate_formula": "SQRT(COALESCE(((SUM(agg.sum_wallduration_squared) / SUM(agg.ended_archive_count)) - POW( SUM(agg.wallduration) / SUM(agg.ended_archive_count) , 2)) / SUM(agg.ended_archive_count), 0))",
+                "timeseries_formula": "SQRT(COALESCE(((SUM(agg.sum_wallduration_squared) / SUM(agg.running_archive_count)) - POW( SUM(agg.wallduration) / SUM(agg.running_archive_count) , 2)) / SUM(agg.running_archive_count) , 0))",
+                "description_html": "Standard error calculation",
+                "name": "Std Dev: Wall Time: Per Job",
+                "precision": 2,
+                "show_in_catalog": false,
+                "unit": "Seconds"
+            },
+            "total_wallduration_hours": {
+                "$ref": "datawarehouse.d/ref/Jobs-statistics.json#/total_wallduration_hours"
+            },
+            "total_wallduration_seconds": {
+                "description_html": "The total time, in seconds, ${ORGANIZATION_NAME} jobs took to execute.<br/><i>Wall Time:</i> Wall time is defined as the linear time between start and end time of execution for a particular job.",
+                "formula": "COALESCE(SUM(agg.wallduration),0)",
+                "name": "Wall Time: Total",
+                "precision": 0,
+                "unit": "Seconds"
+            }
+        }
     }
 }
