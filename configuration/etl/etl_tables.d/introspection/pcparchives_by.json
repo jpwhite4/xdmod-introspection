@@ -1,0 +1,108 @@
+{
+    "table_definition": {
+        "name": "pcparchives_by",
+        "table_prefix": "pcparchives_by_",
+        "engine": "InnoDB",
+        "comment": "PCP archives aggregate table",
+        "columns": [
+            {
+                "name": "${AGGREGATION_UNIT}_id",
+                "type": "int(10) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The id related to modw.${AGGREGATION_UNIT}s."
+            },
+            {
+                "name": "year",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The year of the ${AGGREGATION_UNIT}"
+            },
+            {
+                "name": "${AGGREGATION_UNIT}",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The ${AGGREGATION_UNIT} of the year."
+            },
+            {
+                "name": "node_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The compute node that ran pcp"
+            },
+            {
+                "name": "resource_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: the compute resource"
+            },
+            {
+                "name": "archivelength_bucket_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: Archive length is bucketed based on prechosen intervals in the modw.job_times table."
+            },
+            {
+                "name": "started_archive_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of archives that were created during this period."
+            },
+            {
+                "name": "running_archive_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of archives that contain data during this period."
+            },
+            {
+                "name": "ended_archive_count",
+                "type": "int(11)",
+                "nullable": true,
+                "comment": "FACT: The number of archives that were ended during this period."
+            },
+            {
+                "name": "wallduration",
+                "type": "decimal(18,0)",
+                "comment": "FACT: (seconds) The wallduration of the jobs that were running during this period. This will only count the walltime of the jobs that fell during this day. If a job started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a job ends not in this day, but upcoming days.",
+                "nullable": true
+            },
+            {
+                "name": "sum_wallduration_squared",
+                "type": "double",
+                "comment": "FACT: (seconds) The sum of the square of wallduration of the jobs that were running during this period. This will only count the walltime of the jobs that fell during this day. If a job started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a job ends not in this day, but upcoming days.",
+                "nullable": true
+            }
+        ],
+        "indexes": [
+            {
+                "name": "index_pcparchives_by_${AGGREGATION_UNIT}_${AGGREGATION_UNIT}_id",
+                "columns": [
+                    "${AGGREGATION_UNIT}_id"
+                ]
+            },
+            {
+                "name": "index_pcparchives_by_${AGGREGATION_UNIT}_${AGGREGATION_UNIT}",
+                "columns": [
+                    "${AGGREGATION_UNIT}"
+                ]
+            },
+            {
+                "name": "index_pcparchives_node_id",
+                "columns": [
+                    "node_id"
+                ]
+            },
+            {
+                "name": "index_pcparchives_resource_id",
+                "columns": [
+                    "resource_id"
+                ]
+            },
+            {
+                "name": "index_pcparchives_length_bucket_id",
+                "columns": [
+                    "archivelength_bucket_id"
+                ]
+            }
+        ]
+    }
+}
